@@ -35,7 +35,8 @@ class UserController extends Controller
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && Form::validate($_POST, ['firstName', 'lastName', 'email'])) {
             $user = $user->hydrate($_POST);
 
-            $emailExist = (new User)->findOneByEmail($user->getEmail()) ?->getId() !== $user->getId();
+            $emailExist = (new User)->findOneByEmail($user->getEmail())
+                && (new User)->findOneByEmail($user->getEmail())->getId() !== $user->getId();
 
             if (!$emailExist) {
                 if(!empty($_POST['password'])) {

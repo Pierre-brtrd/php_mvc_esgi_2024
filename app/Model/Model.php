@@ -73,13 +73,15 @@ abstract class Model
         $values = [];
 
         foreach ($this as $key => $value) {
-            if ($key !== 'table' && $key !== 'db' && !empty($value)) {
+            if ($key !== 'table' && $key !== 'db' && ($key === 'actif' || !empty($value))) {
                 $fields[] = "$key = :$key";
 
                 if ($value instanceof \DateTime) {
                     $value = $value->format('Y-m-d H:i:s');
                 } elseif (is_array($value)) {
                     $value = json_encode($value);
+                } elseif (is_bool($value)) {
+                    $value = $value ? 1 : 0;
                 }
 
                 $values[$key] = $value;

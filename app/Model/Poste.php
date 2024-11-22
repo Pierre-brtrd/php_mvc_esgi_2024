@@ -14,6 +14,16 @@ class Poste extends Model
         $this->table = 'postes';
     }
 
+    public function findOneByTitle(string $title): self|bool
+    {
+        return $this->findHydrate(
+            $this->runQuery(
+                "SELECT * FROM {$this->table} WHERE titre = :titre",
+                ['titre' => $title]
+            )->fetch()
+        );
+    }
+
     /**
      * Get the value of id
      *
