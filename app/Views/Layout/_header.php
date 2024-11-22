@@ -7,12 +7,24 @@
             </button>
             <div class="collapse navbar-collapse" id="collapsibleNavId">
                 <ul class="navbar-nav me-auto mt-2 mt-lg-0">
-                    <li class="nav-item">
-                        <a class="nav-link active" href="/" aria-current="page">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Article</a>
-                    </li>
+                    <?php if (isset($_SESSION['user']) && in_array('ROLE_ADMIN', $_SESSION['user']['roles'])): ?>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo $_GET['q'] === '' ? 'active' : '' ?>" href="/" aria-current="page">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo str_starts_with($_GET['q'], 'admin/users') ? 'active' : '' ?>" href="/admin/users">Gestion des users</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link <?php echo str_starts_with($_GET['q'], 'admin/posts') ? 'active' : '' ?>" href="/admin/posts">Gestion des posts</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item">
+                            <a class="nav-link active" href="/" aria-current="page">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Articles</a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
                 <ul class="navbar-nav ms-auto">
                     <?php if (isset($_SESSION['user'])): ?>

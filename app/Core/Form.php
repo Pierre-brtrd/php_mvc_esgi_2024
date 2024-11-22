@@ -57,6 +57,13 @@ abstract class Form
         return $this;
     }
 
+    public function addTextArea(string $name, array $attributs = [], ?string $value = ''): static
+    {
+        $this->formCode .= "<textarea name=\"$name\"{$this->addHtmlAttributes($attributs)}>{$value}</textarea>";
+
+        return $this;
+    }
+
     public function addButton(string $label, array $attributs = []): static
     {
         $this->formCode .= "<button{$this->addHtmlAttributes($attributs)}>$label</button>";
